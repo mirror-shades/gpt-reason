@@ -9,18 +9,22 @@ const openai = new OpenAI({ apiKey });
 
 //const input = "say hello to the worldss";
 const input = "how do I make a compiler in Zig";
+const maxSteps = 5;
 
 const prompt =
   "Consider the following prompt if this is a simple prompt, such as a casual conversation, reply with the word 'skip'. \
 only reply with the word skip, this is important to the program functioning correctly. If the prompt is more \
 complicated, and is in need of reasoning, consider the best approach to the prompt. list out the steps\
 to reason through this prompt. each step should be one simple sentence such as 'consider the usage of x', \
-'think about implications of x', 'assess security risks in x', ect. the list should be a list of 1 to 5 steps.\
+'think about implications of x', 'assess security risks in x', ect. the list should be a list of 1 to " +
+  maxSteps +
+  " steps.\
 you shouldn't include numbering to prefix the steps, just list them as a list. \
 consider the steps as a list which a chatbot will use to work iteratively to reason through the prompt. this means the \
 steps should be limited to the capabilities of a GPT model with no other tools or resources. the goal is to help \
 a chatbot come to a more accurate answer and include no other information. it is crucial to only reply with the word \
-'skip' or the list of steps. Here is the prompt: " + input;
+'skip' or the list of steps. Here is the prompt: " +
+  input;
 
 async function plan(introPrompt: string) {
   const response = await openai.chat.completions.create({
